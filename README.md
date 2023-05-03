@@ -22,6 +22,10 @@ This will initialize your ~/.aws/credentials file with the [nomfa] profile and p
 
 Then you can invoke the script using the numbers from your TOTP:
 awsMFA.sh 123456
+setting profile default
+setting profile profileName1
+setting profile profileName2
+setting profile profileName3
 
 This will generate temporary credentials using the MFA and create a [default] profile using those temp credentials.  It will also iterate through each of your roles and create temporary credentials for those roles and store tham as the named profiles.
 
@@ -31,5 +35,12 @@ aws s3 ls                         //uses the default profile
 export AWS_PFOFILE=profileName2
 aws s3 ls                         //uses profileName2
 aws --profile profileName3 s3 ls  //uses profileName3
+
+Unfortunately role-based profiles expire after an hour, where the main profile can last much longer.  So if you invoke the script without supplying an MFA token it will attempt to just renew the profile tokens:
+
+awsMFA.sh 
+setting profile profileName1
+setting profile profileName2
+setting profile profileName3
 
 profit!
